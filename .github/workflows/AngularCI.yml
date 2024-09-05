@@ -2,8 +2,6 @@ name: Angular CI
 
 # {1}
 on:
-  push:
-    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -14,7 +12,7 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
       # {2}
       - name: Checkout the source code
@@ -29,9 +27,11 @@ jobs:
       # {4}
       - name: Install dependencies
         run: npm install
+
       # {5}
       - name: Run tests
         run: npm run test:ci
+
       # {6}
       - name: Build
         run: npm run build
