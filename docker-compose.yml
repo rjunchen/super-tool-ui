@@ -5,7 +5,7 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 8001:4200
+      - 8001:80
     depends_on:
       - webapi
       
