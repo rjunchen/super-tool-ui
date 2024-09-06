@@ -1,0 +1,42 @@
+services:
+  ui:
+    container_name: super-tool-ui
+    image: rjunchen/super-tool-ui:latest
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8001:4200
+    depends_on:
+      - webapi
+      
+  webapi:
+    container_name: super-tool-webapi
+    image: rjunchen/super-tool-webapi:latest
+    ports:
+      - 8002:8080
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+
+  mongo:
+    image: mongo:latest
+    container_name: super-tool-db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    volumes:
+      - my-db:/var/lib/mongo
+
+  mongo-express:
+    image: mongo-express:latest
+    restart: always
+    container_name: super-tool-db-webui
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password123
+      ME_CONFIG_MONGODB_URL: mongodb://root:password123@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+volumes:
+  my-db:
